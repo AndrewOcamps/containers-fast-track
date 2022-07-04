@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Gerardo Ocampos 2022
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+
+Vagrant.configure("2") do |config|
+
+    config.vm.box = "rockylinux/8"
+    config.vm.box_version = "4.0.0"
+    config.vm.box_check_update = false
+    config.vbguest.auto_update = false
+
+    config.vm.define 'containers-fast-track' do |master|
+      master.vm.hostname = "containers-fast-track.example.labs.com"
+      master.vm.network "private_network", ip: "192.168.33.50"
+      master.vm.provider "virtualbox" do |vb|
+        vb.name = "containers-fast-track"
+        vb.gui = false
+        vb.memory = "1024"
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      end
+      master.vm.provision "shell", inline: <<-SHELL
+        sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+        systemctl restart sshd
+        # Instalacion DOCKER-CE
+        yum install -y yum-utils
+        yum-config-manager --add-repo  https://download.docker.com/linux/centos/docker-ce.repo
+        yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+        systemctl enable --now docker
+        docker --version
+        # Instalacion Docker-Compose
+        curl -SL https://github.com/docker/compose/releases/download/v2.6.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+        docker-compose --version
+      SHELL
+    end
+  end
