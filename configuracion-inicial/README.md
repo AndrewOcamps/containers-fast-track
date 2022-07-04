@@ -48,7 +48,7 @@ La siguiente definición de Vagrantfile, cuenta con todas las personalizaciones 
 
 1. Defina un directorio para crear sus proyectos de Vagrant. En este ejemplo utilizaremos la siguiente ruta `Documentos/laboratorios/containers-fast-track`
 
-2. Dentro del directorio mencionado en el punto anterior, genere o copie el archivo `Vagrantfile` que se encuentra disponible en el repositorio
+2. Dentro del directorio mencionado en el punto anterior, genere o copie el archivo `Vagrantfile` que se encuentra disponible en el [repositorio](Vagrantfile)
 
 ![vagrant-2](img/vagrant-docs-1.png)
 
