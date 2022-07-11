@@ -3,4 +3,5 @@ Repositorio para laboratorios, ejercicios y documentaciones para el curso https:
 
 ## Contenido
 * [Configuración Inicial](configuracion-inicial/README.md)
+* [Laboratorios del Curso](labs/)
 
